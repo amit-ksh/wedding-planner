@@ -1,5 +1,6 @@
 import { authRouter } from "~/server/api/routers/auth";
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
+import { weddingRouter } from "./routers/wedding";
 
 /**
  * This is the primary router for your server.
@@ -8,6 +9,7 @@ import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
  */
 export const appRouter = createTRPCRouter({
   auth: authRouter,
+  wedding: weddingRouter,
 });
 
 // export type definition of API
