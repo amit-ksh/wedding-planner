@@ -1,0 +1,95 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id
+  email     String    @unique
+  password  String
+  createdAt DateTime  @default(now())
+  profile   Profile   @relation(fields: [profileId], references: [id])
+  profileId String    @unique
+  Wedding   Wedding[]
+}
+
+model Profile {
+  id       String  @id
+  fullName String?
+  picture  String?
+  userId   String  @unique
+  User     User?
+}
+
+model Wedding {
+  id        String    @id
+  date      DateTime?
+  groomName String
+  brideName String
+  Event     Event[]
+  Guest     Guest[]
+  venueId   String    @unique
+  Venue     Venue     @relation(fields: [venueId], references: [id])
+  User      User      @relation(fields: [userId], references: [id])
+  userId    String    @unique
+}
+
+model Event {
+  id          String   @id
+  name        String
+  date        DateTime
+  description String?
+  Media       Media[]
+  Wedding     Wedding? @relation(fields: [weddingId], references: [id])
+  weddingId   String?
+}
+
+model Venue {
+  id       String   @id
+  name     String
+  address  String
+  capacity Int?
+  photos   String[]
+  Wedding  Wedding?
+}
+
+model Guest {
+  id             String     @id
+  guestName      String
+  email          String
+  rsvpStatus     String
+  additionalInfo String?
+  invitationId   String     @unique
+  Invitation     Invitation @relation(fields: [invitationId], references: [id])
+  Wedding        Wedding?   @relation(fields: [weddingId], references: [id])
+  weddingId      String?
+}
+
+model Invitation {
+  id               String    @id
+  createdAt        DateTime  @default(now())
+  guestId          String
+  invitationStatus String
+  sentAt           DateTime
+  respondedAt      DateTime?
+  Guest            Guest?
+}
+
+model Media {
+  id         String   @id
+  uploadedAt DateTime @default(now())
+  fileType   String
+  fileUrl    String
+  eventId    String
+  Event      Event    @relation(fields: [eventId], references: [id])
+}
