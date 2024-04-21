@@ -4,6 +4,8 @@ import { cn } from "~/lib/utils";
 import { Toaster } from "~/components/ui/toaster";
 
 import "../styles/globals.css";
+import Navbar from "~/components/Navbar";
+import { TRPCReactProvider } from "~/trpc/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,15 +20,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
-      <body
-        className={cn(
-          "grainy min-h-screen font-sans antialiased",
-          inter.className,
-        )}
-      >
-        {children}
-        <Toaster />
-      </body>
+      <TRPCReactProvider>
+        <body
+          className={cn(
+            "grainy min-h-screen font-sans antialiased",
+            inter.className,
+          )}
+        >
+          <Navbar />
+          {children}
+          <Toaster />
+        </body>
+      </TRPCReactProvider>
     </html>
   );
 }
