@@ -49,8 +49,6 @@ export const weddingRouter = createTRPCRouter({
     .mutation(async ({ ctx, input }) => {
       const { userId } = ctx;
 
-      console.log(ctx);
-
       return await db.wedding.create({
         data: {
           ...input,

@@ -44,8 +44,6 @@ export default function CreateWedding() {
       router.push(`/wedding/${newWedding.id}`);
     },
     onError: (err) => {
-      console.log(err);
-
       toast({
         title: "Error while creating the wedding. Please try again later!",
         variant: "destructive",
