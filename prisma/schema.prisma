@@ -43,7 +43,7 @@ model Wedding {
     venueId     String?   @unique
     Venue       Venue?    @relation(fields: [venueId], references: [id])
     User        User      @relation(fields: [userId], references: [id])
-    userId      String    @unique
+    userId      String
 }
 
 model Event {
