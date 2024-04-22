@@ -89,7 +89,7 @@ export const weddingRouter = createTRPCRouter({
         },
       });
     }),
-  deleteWedding: protectedProcedure
+  delete: protectedProcedure
     .input(
       z.object({
         id: z.string(),
