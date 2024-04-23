@@ -50,7 +50,7 @@ model Event {
     id          String   @id @default(uuid())
     name        String
     date        DateTime
-    description String?
+    description String
     Media       Media[]
     Wedding     Wedding? @relation(fields: [weddingId], references: [id])
     weddingId   String?

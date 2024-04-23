@@ -4,6 +4,7 @@ import MaxWidthWrapper from "~/components/MaxWidthWrapper";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import { db } from "~/server/db";
 import Wedding from "./wedding";
+import Events from "./events";
 
 interface PageProps {
   params: {
@@ -47,12 +48,18 @@ export default async function page(props: PageProps) {
             Guests
           </TabsTrigger>
         </TabsList>
-        <TabsContent value="wedding">
+        <TabsContent id="wedding" value="wedding">
           <Wedding weddingId={props.params.id} />
         </TabsContent>
-        <TabsContent value="venue">Venue</TabsContent>
-        <TabsContent value="events">EVENTS</TabsContent>
-        <TabsContent value="guests">GUESTS</TabsContent>
+        <TabsContent id="venue" value="venue">
+          Venue
+        </TabsContent>
+        <TabsContent id="events" value="events">
+          <Events weddingId={wedding.id} />
+        </TabsContent>
+        <TabsContent id="guests" value="guests">
+          GUESTS
+        </TabsContent>
       </Tabs>
     </MaxWidthWrapper>
   );
