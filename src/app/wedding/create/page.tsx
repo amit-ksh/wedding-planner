@@ -7,7 +7,7 @@ import MaxWidthWrapper from "~/components/MaxWidthWrapper";
 import { api } from "~/trpc/react";
 
 import WeddingForm, {
-  type TCustomFormValidator,
+  type TCustomWeddingFormValidator,
 } from "~/components/wedding/WeddingForm";
 
 export default function CreateWedding() {
@@ -28,12 +28,12 @@ export default function CreateWedding() {
     },
   });
 
-  function handleFormSubmit(data: TCustomFormValidator) {
+  function handleFormSubmit(data: TCustomWeddingFormValidator) {
     const [hours, minutes] = data.time.split(":");
     data.date.setHours(Number(hours));
     data.date.setMinutes(Number(minutes));
 
-    const payload: Omit<TCustomFormValidator, "time"> = {
+    const payload: Parameters<typeof createWedding>["0"] = {
       title: data.title,
       description: data.description,
       brideName: data.brideName,
