@@ -49,7 +49,7 @@ export default function WeddingView({ wedding }: WeddingViewProps) {
     <div className="space-y-5">
       <WeddingForm
         onSubmit={handleFormSubmit}
-        defaultValues={wedding}
+        defaultValues={{ ...wedding, time: format(wedding.date, "kk:mm") }}
         disabled={status == "pending"}
         formTitle="Wedding"
         formDescription="Manage the wedding details from here."
@@ -73,6 +73,7 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { Badge } from "../ui/badge";
+import { format } from "date-fns";
 
 export function DeleteWeddingForm({
   id,
