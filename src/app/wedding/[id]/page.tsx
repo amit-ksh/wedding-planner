@@ -48,18 +48,14 @@ export default async function page(props: PageProps) {
             Guests
           </TabsTrigger>
         </TabsList>
-        <TabsContent id="wedding" value="wedding">
+        <TabsContent value="wedding">
           <Wedding weddingId={props.params.id} />
         </TabsContent>
-        <TabsContent id="venue" value="venue">
-          Venue
-        </TabsContent>
-        <TabsContent id="events" value="events">
+        <TabsContent value="venue">Venue</TabsContent>
+        <TabsContent value="events">
           <Events weddingId={wedding.id} />
         </TabsContent>
-        <TabsContent id="guests" value="guests">
-          GUESTS
-        </TabsContent>
+        <TabsContent value="guests">GUESTS</TabsContent>
       </Tabs>
     </MaxWidthWrapper>
   );

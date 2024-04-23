@@ -24,7 +24,7 @@ import DatePicker from "~/components/ui/datepicker";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-const CustomFormValidator = z.object({
+const CustomWeddingFormValidator = z.object({
   title: z
     .string()
     .min(4, { message: "Title should be min of 4 letters." })
@@ -36,11 +36,13 @@ const CustomFormValidator = z.object({
   time: z.string(),
 });
 
-export type TCustomFormValidator = z.infer<typeof CustomFormValidator>;
+export type TCustomWeddingFormValidator = z.infer<
+  typeof CustomWeddingFormValidator
+>;
 
-interface FormProps {
-  onSubmit: (data: TCustomFormValidator) => void;
-  defaultValues?: Partial<TCustomFormValidator>;
+interface WeddingFormProps {
+  onSubmit: (data: TCustomWeddingFormValidator) => void;
+  defaultValues?: Partial<TCustomWeddingFormValidator>;
   disabled?: boolean;
   formTitle: string;
   formDescription?: string;
@@ -48,7 +50,7 @@ interface FormProps {
   className?: string;
 }
 
-export default function WeddingForm({
+export default function WeddingFormProps({
   onSubmit,
   defaultValues,
   className,
@@ -56,9 +58,9 @@ export default function WeddingForm({
   formTitle,
   formDescription,
   submitButtonLabel,
-}: FormProps) {
-  const form = useForm<TCustomFormValidator>({
-    resolver: zodResolver(CustomFormValidator),
+}: WeddingFormProps) {
+  const form = useForm<TCustomWeddingFormValidator>({
+    resolver: zodResolver(CustomWeddingFormValidator),
     defaultValues,
   });
 

@@ -1,17 +1,17 @@
 "use client";
 
+import type { Wedding } from "@prisma/client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { toast } from "~/components/ui/use-toast";
 import WeddingForm, {
-  type TCustomFormValidator,
-} from "~/components/wedding/Form";
-
+  type TCustomWeddingFormValidator,
+} from "~/components/wedding/WeddingForm";
 import { api } from "~/trpc/react";
 
 interface WeddingViewProps {
-  wedding: TCustomFormValidator & { id: string };
+  wedding: Wedding;
 }
 
 export default function WeddingView({ wedding }: WeddingViewProps) {
@@ -30,12 +30,12 @@ export default function WeddingView({ wedding }: WeddingViewProps) {
     },
   });
 
-  function handleFormSubmit(data: TCustomFormValidator) {
+  function handleFormSubmit(data: TCustomWeddingFormValidator) {
     const [hours, minutes] = data.time.split(":");
     data.date.setHours(Number(hours));
     data.date.setMinutes(Number(minutes));
 
-    const payload: Omit<TCustomFormValidator, "time"> & { id: string } = {
+    const payload: Parameters<typeof updateWedding>["0"] = {
       id: wedding.id,
       title: data.title,
       description: data.description,

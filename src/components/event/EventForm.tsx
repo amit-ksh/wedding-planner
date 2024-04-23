@@ -24,7 +24,7 @@ import DatePicker from "../ui/datepicker";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
-const CustomFormValidator = z.object({
+const CustomEventFormValidator = z.object({
   name: z
     .string()
     .min(4, { message: "Title should be min of 4 letters." })
@@ -34,11 +34,13 @@ const CustomFormValidator = z.object({
   time: z.string(),
 });
 
-export type TCustomFormValidator = z.infer<typeof CustomFormValidator>;
+export type TCustomEventFormValidator = z.infer<
+  typeof CustomEventFormValidator
+>;
 
 interface EventFormProps {
-  onSubmit: (data: TCustomFormValidator) => void;
-  defaultValues?: Partial<TCustomFormValidator>;
+  onSubmit: (data: TCustomEventFormValidator) => void;
+  defaultValues?: Partial<TCustomEventFormValidator>;
   disabled?: boolean;
   formTitle: string;
   formDescription?: string;
@@ -58,12 +60,12 @@ export function EventForm({
   children,
 }: EventFormProps) {
   const [open, setOpen] = useState<boolean>(false);
-  const form = useForm<TCustomFormValidator>({
-    resolver: zodResolver(CustomFormValidator),
+  const form = useForm<TCustomEventFormValidator>({
+    resolver: zodResolver(CustomEventFormValidator),
     defaultValues,
   });
 
-  function handleSubmit(data: TCustomFormValidator) {
+  function handleSubmit(data: TCustomEventFormValidator) {
     onSubmit(data);
     setOpen(false);
   }
@@ -159,6 +161,9 @@ export function EventForm({
           </form>
         </Form>
         <DialogFooter>
+          <Button variant="secondary" onClick={() => setOpen(false)}>
+            Close
+          </Button>
           <Button
             type="submit"
             form="event-form"

@@ -2,7 +2,7 @@
 
 import type { Event } from "@prisma/client";
 import { Card, CardDescription, CardHeader, CardTitle } from "../ui/card";
-import { EventForm, type TCustomFormValidator } from "./Form";
+import { EventForm, type TCustomEventFormValidator } from "./EventForm";
 import { api } from "~/trpc/react";
 import { toast } from "../ui/use-toast";
 import { format } from "date-fns";
@@ -29,7 +29,7 @@ export default function EventsView(props: EventsViewProps) {
     },
   });
 
-  function handleFormSubmit(data: TCustomFormValidator) {
+  function handleFormSubmit(data: TCustomEventFormValidator) {
     const [hours, minutes] = data.time.split(":");
     data.date.setHours(Number(hours));
     data.date.setMinutes(Number(minutes));

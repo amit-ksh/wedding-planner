@@ -8,7 +8,7 @@ import { api } from "~/trpc/react";
 
 import WeddingForm, {
   type TCustomFormValidator,
-} from "~/components/wedding/Form";
+} from "~/components/wedding/WeddingForm";
 
 export default function CreateWedding() {
   const router = useRouter();
