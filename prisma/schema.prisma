@@ -88,8 +88,8 @@ model Invitation {
 model Media {
     id         String   @id @default(uuid())
     uploadedAt DateTime @default(now())
-    fileType   String
-    fileUrl    String
+    type       String
+    publicId   String
     eventId    String
     Event      Event    @relation(fields: [eventId], references: [id])
 }

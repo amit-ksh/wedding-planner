@@ -1,4 +1,4 @@
-import { type ReactNode, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 import { z } from "zod";
 import { Button } from "~/components/ui/button";
 import {
@@ -23,6 +23,7 @@ import { Textarea } from "../ui/textarea";
 import DatePicker from "../ui/datepicker";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { cn } from "~/lib/utils";
 
 const CustomEventFormValidator = z.object({
   name: z
@@ -65,6 +66,17 @@ export function EventForm({
     defaultValues,
   });
 
+  useEffect(() => {
+    if (!defaultValues) return;
+
+    for (const key in defaultValues) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-expect-error
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      form.setValue(key, defaultValues[key]);
+    }
+  }, [defaultValues, form]);
+
   function handleSubmit(data: TCustomEventFormValidator) {
     onSubmit(data);
     setOpen(false);
@@ -74,8 +86,8 @@ export function EventForm({
     <Dialog open={open}>
       <DialogTrigger asChild>
         <Button
-          variant="outline"
-          className={className}
+          variant="default"
+          className={cn("text-color-white", className)}
           onClick={() => setOpen(true)}
         >
           {children}
@@ -97,7 +109,7 @@ export function EventForm({
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Title</FormLabel>
+                    <FormLabel>Name</FormLabel>
                     <FormControl>
                       <Input placeholder="Event Name" {...field} />
                     </FormControl>
@@ -160,6 +172,7 @@ export function EventForm({
             </div>
           </form>
         </Form>
+
         <DialogFooter>
           <Button variant="secondary" onClick={() => setOpen(false)}>
             Close

@@ -1,6 +1,8 @@
 import { db } from "~/server/db";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { z } from "zod";
+import { deleteResources } from "~/lib/cloudinary";
+import { TRPCError } from "@trpc/server";
 
 export const eventRouter = createTRPCRouter({
   getAll: protectedProcedure
@@ -76,8 +78,29 @@ export const eventRouter = createTRPCRouter({
       }),
     )
     .mutation(async ({ input }) => {
-      return await db.event.delete({
-        where: input,
-      });
+      return await deleteEvent(input.id);
     }),
 });
+
+export async function deleteEvent(id: string) {
+  const event = await db.event.findFirst({
+    where: { id },
+    select: {
+      Media: true,
+    },
+  });
+
+  if (!event)
+    throw new TRPCError({
+      code: "NOT_FOUND",
+    });
+
+  // delete all the images and videos
+  for (const media of event?.Media) {
+    await deleteResources(media.publicId, media.type);
+  }
+
+  return await db.event.delete({
+    where: { id },
+  });
+}

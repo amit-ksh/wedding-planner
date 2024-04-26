@@ -2,6 +2,7 @@ import { TRPCError } from "@trpc/server";
 import { db } from "~/server/db";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { z } from "zod";
+import { deleteEvent } from "./event";
 
 export const weddingRouter = createTRPCRouter({
   getAll: protectedProcedure.query(async ({ ctx }) => {
@@ -103,10 +104,23 @@ export const weddingRouter = createTRPCRouter({
           id: input.id,
           userId,
         },
+        select: {
+          Event: {
+            select: {
+              id: true,
+            },
+          },
+        },
       });
 
       if (!wedding) {
         throw new TRPCError({ code: "NOT_FOUND" });
+      }
+
+      // delete all the events and its media
+      // before deleting wedding
+      for (const event of wedding.Event) {
+        await deleteEvent(event.id);
       }
 
       return await db.wedding.delete({
