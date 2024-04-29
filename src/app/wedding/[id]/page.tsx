@@ -5,6 +5,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import { db } from "~/server/db";
 import Wedding from "./wedding";
 import Events from "./events";
+import Guests from "./guests";
 
 interface PageProps {
   params: {
@@ -55,7 +56,9 @@ export default async function page(props: PageProps) {
         <TabsContent value="events">
           <Events weddingId={wedding.id} />
         </TabsContent>
-        <TabsContent value="guests">GUESTS</TabsContent>
+        <TabsContent value="guests">
+          <Guests weddingId={wedding.id} />
+        </TabsContent>
       </Tabs>
     </MaxWidthWrapper>
   );

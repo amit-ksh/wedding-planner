@@ -64,25 +64,21 @@ model Venue {
     Wedding Wedding?
 }
 
-model Guest {
-    id             String     @id @default(uuid())
-    guestName      String
-    email          String
-    additionalInfo String?
-    invitationId   String     @unique
-    Invitation     Invitation @relation(fields: [invitationId], references: [id])
-    Wedding        Wedding?   @relation(fields: [weddingId], references: [id])
-    weddingId      String?
+enum InvitationStatus {
+    NOT_SENT
+    SENT
 }
 
-model Invitation {
-    id          String    @id @default(uuid())
-    createdAt   DateTime  @default(now())
-    guestId     String
-    status      String
-    sentAt      DateTime
-    respondedAt DateTime?
-    Guest       Guest?
+model Guest {
+    id             String           @id @default(uuid())
+    createdAt      DateTime         @default(now())
+    name           String
+    email          String
+    additionalInfo String?
+    status         InvitationStatus @default(NOT_SENT)
+    sentAt         DateTime?
+    Wedding        Wedding?         @relation(fields: [weddingId], references: [id])
+    weddingId      String?
 }
 
 model Media {

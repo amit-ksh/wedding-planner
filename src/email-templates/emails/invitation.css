@@ -1,0 +1,60 @@
+.container {
+  position: relative;
+}
+
+.bg-image {
+  position: absolute;
+  z-index: 10;
+  height: 800px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.content-wrapper {
+  position: absolute;
+  z-index: 20;
+  height: 100%;
+  width: 100%;
+}
+
+.content-container {
+  margin: 48px;
+  padding: 16px;
+  border-radius: 4px;
+  border: 2px solid #f6e05e;
+  text-align: center;
+  font-family: "Mono", monospace;
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #3b3b3b;
+}
+
+.content-container p {
+  margin-bottom: 20px;
+}
+
+.content-container h1 {
+  font-family: sans-serif;
+  font-size: 30px;
+  font-weight: normal;
+  text-transform: capitalize;
+  color: #f59e0b;
+}
+
+.save-date-container p {
+  margin-top: 20px;
+  font-family: serif;
+}
+
+.location-container {
+  margin-top: 20px;
+}
+
+.location-container .location-icon {
+  display: block;
+  margin: 0 auto;
+  height: 48px;
+  width: 48px;
+  fill: #f59e0b;
+}
