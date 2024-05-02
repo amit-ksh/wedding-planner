@@ -111,7 +111,9 @@ export const guestRouter = createTRPCRouter({
           userId: ctx.userId,
         },
         include: {
-          Guest: true,
+          Guest: {
+            where: { status: "NOT_SENT" },
+          },
         },
       });
 
@@ -143,8 +145,21 @@ export const guestRouter = createTRPCRouter({
           message: error.message,
         });
 
+      const updatedGuests = await db.guest.updateMany({
+        data: {
+          sentAt: new Date(),
+          status: "SENT",
+        },
+        where: {
+          id: {
+            in: wedding.Guest.map((g) => g.id),
+          },
+        },
+      });
+
       return {
         message: "Sending mails to guests.",
+        totalMailSent: updatedGuests.count,
       };
     }),
   delete: protectedProcedure

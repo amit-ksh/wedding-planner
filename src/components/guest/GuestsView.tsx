@@ -87,7 +87,10 @@ export default function GuestsView({ guests, weddingId }: GuestsViewProps) {
               size="sm"
               className="text-white"
               onClick={handleSendMails}
-              disabled={sendingMailsStatus == "pending"}
+              disabled={
+                guests.unsentGuestEmails.length == 0 ||
+                sendingMailsStatus == "pending"
+              }
             >
               Send Mails to Guests
             </Button>
@@ -98,13 +101,19 @@ export default function GuestsView({ guests, weddingId }: GuestsViewProps) {
               <p>Guest&apos;s Email</p>
               <p>Added At</p>
             </li>
-            {guests.unsentGuestEmails.map((guest) => (
-              <li key={guest.id} className="grid grid-cols-3 border-b py-1">
-                <p>{guest.name}</p>
-                <p>{guest.email}</p>
-                <p>{format(guest.createdAt, "PPpp")}</p>
+            {guests.unsentGuestEmails.length > 0 ? (
+              guests.unsentGuestEmails.map((guest) => (
+                <li key={guest.id} className="grid grid-cols-3 border-b py-1">
+                  <p>{guest.name}</p>
+                  <p>{guest.email}</p>
+                  <p>{format(guest.createdAt, "PPpp")}</p>
+                </li>
+              ))
+            ) : (
+              <li className="my-4 text-center text-lg font-medium">
+                No new guests added
               </li>
-            ))}
+            )}
           </ul>
         </div>
 
@@ -118,13 +127,19 @@ export default function GuestsView({ guests, weddingId }: GuestsViewProps) {
               <p>Guest&apos;s Email</p>
               <p>Mail Sent At</p>
             </li>
-            {guests.unsentGuestEmails.map((guest) => (
-              <li key={guest.id} className="grid grid-cols-3 border-b py-1">
-                <p>{guest.name}</p>
-                <p>{guest.email}</p>
-                <p>{format(guest.createdAt, "PPpp")}</p>
+            {guests.sentGuestEmails.length > 0 ? (
+              guests.sentGuestEmails.map((guest) => (
+                <li key={guest.id} className="grid grid-cols-3 border-b py-1">
+                  <p>{guest.name}</p>
+                  <p>{guest.email}</p>
+                  <p>{format(guest.createdAt, "PPpp")}</p>
+                </li>
+              ))
+            ) : (
+              <li className="my-4 text-center text-lg font-medium">
+                0 mails sent to the guests
               </li>
-            ))}
+            )}
           </ul>
         </div>
       </CardContent>
