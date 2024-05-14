@@ -9,6 +9,9 @@ const config = {
   images: {
     domains: ["res.cloudinary.com"],
   },
+  experimental: {
+    missingSuspenseWithCSRBailout: false,
+  },
 };
 
 export default config;

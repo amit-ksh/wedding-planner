@@ -1,16 +1,13 @@
 "use client";
 
-import { CldUploadButton } from "next-cloudinary";
+import {
+  CldUploadButton,
+  type CloudinaryUploadWidgetInfo,
+  type CloudinaryUploadWidgetResults,
+} from "next-cloudinary";
 import { Button } from "~/components/ui/button";
 import { api } from "~/trpc/react";
 import { toast } from "../ui/use-toast";
-
-interface UploadMediaResult {
-  info: {
-    public_id: string;
-    resource_type: "image" | "video";
-  };
-}
 
 interface UploadButton {
   eventId: string;
@@ -42,9 +39,17 @@ export default function UploadButton({ eventId }: UploadButton) {
     >
       <CldUploadButton
         uploadPreset="zhogkbxa"
-        onUpload={(res: UploadMediaResult) => {
-          const publicId = res?.info?.public_id;
-          const type = res?.info?.resource_type;
+        onUpload={(res: CloudinaryUploadWidgetResults) => {
+          const info = res?.info as CloudinaryUploadWidgetInfo;
+          if (!info) {
+            toast({
+              variant: "destructive",
+              title: "Unable to upload media. Please try again!",
+            });
+          }
+
+          const publicId = info.public_id;
+          const type = info.resource_type;
 
           if (!publicId || !type) {
             toast({
