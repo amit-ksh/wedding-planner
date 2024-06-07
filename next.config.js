@@ -7,7 +7,7 @@ await import("./src/env.js");
 /** @type {import("next").NextConfig} */
 const config = {
   images: {
-    domains: ["res.cloudinary.com"],
+    domains: ["res.cloudinary.com", "fastly.4sqi.net"],
   },
   experimental: {
     missingSuspenseWithCSRBailout: false,

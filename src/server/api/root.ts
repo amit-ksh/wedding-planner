@@ -4,6 +4,7 @@ import { weddingRouter } from "./routers/wedding";
 import { eventRouter } from "./routers/event";
 import { mediaRouter } from "./routers/media";
 import { guestRouter } from "./routers/guest";
+import { venueRouter } from "./routers/venue";
 
 /**
  * This is the primary router for your server.
@@ -13,6 +14,7 @@ import { guestRouter } from "./routers/guest";
 export const appRouter = createTRPCRouter({
   auth: authRouter,
   wedding: weddingRouter,
+  venue: venueRouter,
   event: eventRouter,
   media: mediaRouter,
   guest: guestRouter,

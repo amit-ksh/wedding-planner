@@ -1,0 +1,246 @@
+[
+  {
+    "fsq_id": "528cb78b11d209ef2070dcec",
+    "geocodes": {
+      "main": {
+        "latitude": 23.339131,
+        "longitude": 85.307141
+      }
+    },
+    "location": {
+      "country": "IN",
+      "cross_street": "",
+      "formatted_address": "Ranchi 834002, Jharkhand",
+      "locality": "Ranchi",
+      "postcode": "834002",
+      "region": "Jharkhand"
+    },
+    "name": "Mecon Community Hall",
+    "photos": [],
+    "verified": false
+  },
+  {
+    "fsq_id": "9b3c6df6aa3d43e1cbc09715",
+    "geocodes": {
+      "main": {
+        "latitude": 23.331941,
+        "longitude": 85.317273
+      }
+    },
+    "location": {
+      "address": "Hotel Jalsa Grand, Hinoo Main Road, Hinoo",
+      "address_extended": "Near Allahabad Bank",
+      "country": "IN",
+      "formatted_address": "Hotel Jalsa Grand, Hinoo Main Road, Hinoo, Ranchi 834002, Jharkhand",
+      "locality": "Ranchi",
+      "postcode": "834002",
+      "region": "Jharkhand"
+    },
+    "name": "Banquet Hall Jalsa Grand",
+    "photos": [],
+    "verified": false
+  },
+  {
+    "fsq_id": "517f1da4e4b06a8206c3201b",
+    "features": {
+      "payment": {
+        "credit_cards": {
+          "accepts_credit_cards": true
+        }
+      },
+      "services": {
+        "dine_in": {
+          "reservations": true
+        }
+      },
+      "amenities": {
+        "outdoor_seating": false
+      }
+    },
+    "geocodes": {
+      "main": {
+        "latitude": 23.352969,
+        "longitude": 85.298783
+      }
+    },
+    "location": {
+      "address": "Harmu Road",
+      "country": "IN",
+      "cross_street": "Harmu Colony",
+      "formatted_address": "Harmu Road (Harmu Colony), Ranchi 834002, Jharkhand",
+      "locality": "Ranchi",
+      "postcode": "834002",
+      "region": "Jharkhand"
+    },
+    "name": "Mahi Exotica Banquet",
+    "photos": [
+      {
+        "id": "519f6599498e0e64c869dd43",
+        "created_at": "2013-05-24T13:05:29.000Z",
+        "prefix": "https://fastly.4sqi.net/img/general/",
+        "suffix": "/56353586_mCuhhyZdGP610lYJ35Rx81wrbAJQdlEZAd0Pk49qF78.jpg",
+        "width": 960,
+        "height": 720
+      },
+      {
+        "id": "519f656c498ec95ea6505a3b",
+        "created_at": "2013-05-24T13:04:44.000Z",
+        "prefix": "https://fastly.4sqi.net/img/general/",
+        "suffix": "/56353586_iw5LqSqWB_Nf2o9-sfKgJcArgSICO_BmcqSq7sxo8Ao.jpg",
+        "width": 960,
+        "height": 720,
+        "classifications": [
+          "outdoor"
+        ]
+      }
+    ],
+    "price": 2,
+    "tel": "0651 324 3007",
+    "verified": false
+  },
+  {
+    "fsq_id": "512cb821e4b061cdd4f31135",
+    "geocodes": {
+      "main": {
+        "latitude": 23.352045,
+        "longitude": 85.324791
+      }
+    },
+    "location": {
+      "address": "Beside Bharat Electronics",
+      "country": "IN",
+      "cross_street": "Near Big Bazar",
+      "formatted_address": "Beside Bharat Electronics (Near Big Bazar), Ranchi 834001, Jharkhand",
+      "locality": "Ranchi",
+      "postcode": "834001",
+      "region": "Jharkhand"
+    },
+    "name": "Abhi Homeo Hall",
+    "photos": [],
+    "tel": "098354 46073",
+    "verified": false
+  },
+  {
+    "fsq_id": "4ffd460daa1e462b1f64e31d",
+    "email": "praipat@hotmail.com",
+    "geocodes": {
+      "main": {
+        "latitude": 23.349629,
+        "longitude": 85.33013
+      }
+    },
+    "location": {
+      "address": "Station Road",
+      "country": "IN",
+      "formatted_address": "Station Road, Ranchi 834001, Jharkhand",
+      "locality": "Ranchi",
+      "postcode": "834001",
+      "region": "Jharkhand"
+    },
+    "name": "Green Horizon Banquet",
+    "photos": [],
+    "tel": "0651 246 2100",
+    "verified": false,
+    "website": "http://www.hotelgreenhorizon.com"
+  },
+  {
+    "fsq_id": "4fa8d112e4b0f380f2bd5eda",
+    "geocodes": {
+      "main": {
+        "latitude": 23.361375,
+        "longitude": 85.326812
+      }
+    },
+    "location": {
+      "country": "IN",
+      "cross_street": "",
+      "formatted_address": "951735",
+      "postcode": "951735"
+    },
+    "name": "Shiv Homeo Hall",
+    "photos": [],
+    "verified": false
+  },
+  {
+    "fsq_id": "ca58ca53eb0047288f451cd8",
+    "geocodes": {
+      "main": {
+        "latitude": 23.344196,
+        "longitude": 85.309712
+      }
+    },
+    "location": {
+      "country": "IN",
+      "formatted_address": "Ranchi 834001, Jharkhand",
+      "locality": "Ranchi",
+      "postcode": "834001",
+      "region": "Jharkhand"
+    },
+    "name": "Shiv Homoeo Hall",
+    "photos": [],
+    "tel": "093045 20150",
+    "verified": false
+  },
+  {
+    "fsq_id": "a2dc73cb57264d3d0974c959",
+    "geocodes": {
+      "main": {
+        "latitude": 23.350074,
+        "longitude": 85.312048
+      }
+    },
+    "location": {
+      "address": "Kadru Road",
+      "country": "IN",
+      "formatted_address": "Kadru Road, Ranchi 834002, Jharkhand",
+      "locality": "Ranchi",
+      "postcode": "834002",
+      "region": "Jharkhand"
+    },
+    "name": "Kadru Homeo Hall",
+    "photos": [],
+    "verified": false
+  },
+  {
+    "fsq_id": "9e7be134101e45ef005bf789",
+    "geocodes": {
+      "main": {
+        "latitude": 23.350229,
+        "longitude": 85.315195
+      }
+    },
+    "location": {
+      "address": "Jamia Nagar, Kadru",
+      "address_extended": "Near Fci Godown",
+      "country": "IN",
+      "formatted_address": "Jamia Nagar, Kadru, Ranchi 834002, Jharkhand",
+      "locality": "Ranchi",
+      "postcode": "834002",
+      "region": "Jharkhand"
+    },
+    "name": "Jamia Banquet and Multi Purpose Hall",
+    "photos": [],
+    "verified": false
+  },
+  {
+    "fsq_id": "e77799a712244b3cdc97271a",
+    "geocodes": {
+      "main": {
+        "latitude": 23.346476,
+        "longitude": 85.300726
+      }
+    },
+    "location": {
+      "address": "Road No 4, Ashok Nagar, Vidhyalaya Mar",
+      "country": "IN",
+      "formatted_address": "Road No 4, Ashok Nagar, Vidhyalaya Mar, Ranchi 834002, Jharkhand",
+      "locality": "Ranchi",
+      "postcode": "834002",
+      "region": "Jharkhand"
+    },
+    "name": "Amaltas Banquet Hall",
+    "photos": [],
+    "tel": "0651 224 1955",
+    "verified": false
+  }
+]

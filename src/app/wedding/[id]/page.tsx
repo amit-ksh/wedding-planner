@@ -6,6 +6,7 @@ import { db } from "~/server/db";
 import Wedding from "./wedding";
 import Events from "./events";
 import Guests from "./guests";
+import Venue from "./venue";
 
 interface PageProps {
   params: {
@@ -52,7 +53,9 @@ export default async function page(props: PageProps) {
         <TabsContent value="wedding">
           <Wedding weddingId={props.params.id} />
         </TabsContent>
-        <TabsContent value="venue">Venue</TabsContent>
+        <TabsContent value="venue">
+          <Venue weddingId={wedding.id} />
+        </TabsContent>
         <TabsContent value="events">
           <Events weddingId={wedding.id} />
         </TabsContent>
