@@ -1,6 +1,6 @@
 "use client";
 
-import { type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import type { Venue } from "@prisma/client";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
@@ -22,8 +22,20 @@ import {
   CarouselPrevious,
 } from "~/components/ui/carousel";
 import Image from "next/image";
-import venues from "./venues.json";
+// import venues from "./venues.json";
 import Link from "next/link";
+import { ImageIcon } from "lucide-react";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../ui/alert-dialog";
 
 type Venues = Array<{
   fsq_id: string;
@@ -72,7 +84,8 @@ interface VenueViewProps {
 // TODO: add a way to view the booked venue
 
 export default function VenueView(props: VenueViewProps) {
-  const { mutate: bookVenue, status } = api.venue.book.useMutation({
+  const [query, setQuery] = useState<string>("wedding hall or banquet");
+  const { mutateAsync: bookVenue, status } = api.venue.book.useMutation({
     onSuccess(data) {
       toast({
         title: data.name + " Venue Booked!",
@@ -86,42 +99,100 @@ export default function VenueView(props: VenueViewProps) {
       });
     },
   });
-  // const {data: venues, isLoading: venuesLoading, isError: getVenuesError} = api.venue.getVenues.useQuery({
-  //   query: 'wedding hall or banquet',
-  //   country: 'India',
-  //   state: 'JH',
-  // })
+  const {
+    data: venues,
+    isLoading: venuesLoading,
+    isError: getVenuesError,
+  } = api.venue.getVenues.useQuery({
+    query,
+    country: "India",
+    state: "JH",
+  });
+
+  const {
+    data: bookedVenue,
+    isLoading: bookedVenueLoading,
+    refetch: refetchBookedVenue,
+  } = api.venue.getWeddingVenue.useQuery({ weddingId: props.weddingId });
 
   function handleVenueSearch(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
     const search = formData.get("search");
-    console.log(search);
-
-    // search for the venues
+    setQuery(search as string);
   }
 
-  function handleVenueBook(venue: Omit<Venue, "id">) {
-    bookVenue({
-      name: venue.name,
-      address: venue.address,
-      photos: venue.photos,
-      weddingId: props.weddingId,
-    });
+  async function handleVenueBook(venue: Omit<Venue, "id">) {
+    try {
+      await bookVenue({
+        name: venue.name,
+        address: venue.address,
+        photos: venue.photos,
+        weddingId: props.weddingId,
+      });
+      toast({
+        title: "Venue Booked!",
+        description: venue.name + " has been booked for the wedding",
+      });
+      await refetchBookedVenue();
+    } catch (error) {
+      console.log(error);
+      toast({
+        variant: "destructive",
+        title: "Error while booking the venue. Please try again",
+      });
+    }
   }
 
   return (
     <div className="space-y-4">
       {/* If venue booked then show the booked venue */}
-      {props.venue ? (
-        <Card>
-          <CardHeader>
-            <CardTitle>{props.venue.name}</CardTitle>
-            <CardDescription>{props.venue.address}</CardDescription>
-          </CardHeader>
-          <CardContent>{/* Photos */}</CardContent>
-        </Card>
-      ) : null}
+      <Card>
+        <CardHeader>
+          <CardTitle>Booked Venue</CardTitle>
+          <CardDescription>
+            {bookedVenue ? (
+              <>
+                <h3 className="text-xl font-medium">{bookedVenue.name}</h3>
+                <p className="font-medium">{bookedVenue.address}</p>
+              </>
+            ) : (
+              <p>No venue booked yet</p>
+            )}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <h4 className="mb-2 text-lg font-medium">Photos</h4>
+          <Carousel className="mx-auto w-[90%]">
+            <CarouselContent>
+              {bookedVenue && bookedVenue.photos.length > 0 ? (
+                <>
+                  {bookedVenue?.photos.map((photo) => (
+                    <CarouselItem key={photo} className="lg:basis-1/2">
+                      <Image
+                        src={`${photo}`}
+                        width={512}
+                        height={408}
+                        alt={bookedVenue.name}
+                        className="aspect-auto rounded-md object-cover"
+                      />
+                    </CarouselItem>
+                  ))}
+                  <CarouselPrevious />
+                  <CarouselNext />
+                </>
+              ) : (
+                <CarouselItem className="text-center font-semibold text-muted-foreground">
+                  <div className="flex h-[315px] flex-col items-center justify-center gap-4">
+                    <ImageIcon className="h-12 w-12" />
+                    No photos available
+                  </div>
+                </CarouselItem>
+              )}
+            </CarouselContent>
+          </Carousel>
+        </CardContent>
+      </Card>
 
       <div className="rounded-xl border bg-slate-900/40 p-2">
         <form
@@ -129,7 +200,11 @@ export default function VenueView(props: VenueViewProps) {
           className="flex flex-col gap-2 sm:flex-row"
           onSubmit={handleVenueSearch}
         >
-          <Input name="search" placeholder="Search Venue" />
+          <Input
+            name="search"
+            placeholder="Search Venue"
+            defaultValue={query}
+          />
           <Button
             type="submit"
             form="search-venue-form"
@@ -144,7 +219,7 @@ export default function VenueView(props: VenueViewProps) {
       <div className="grid grid-cols-1 gap-4 p-2 lg:grid-cols-2">
         {venues && venues?.length > 0
           ? venues.map((venue) => (
-              <Card key={venue.fsq_id} className="flex flex-col h-fit">
+              <Card key={venue.fsq_id} className="flex h-full flex-col">
                 <CardHeader className="h-fit">
                   <CardTitle>{venue.name}</CardTitle>
                   <CardDescription className="flex items-center justify-between text-sm font-medium">
@@ -163,7 +238,7 @@ export default function VenueView(props: VenueViewProps) {
                   {/* PHOTOS */}
                   <div className="">
                     <h4 className="text-lg font-medium">Photos</h4>
-                    <Carousel className="w-[85%] mx-auto">
+                    <Carousel className="mx-auto w-[85%]">
                       <CarouselContent>
                         {venue.photos.length > 0 ? (
                           venue.photos.map((photo) => (
@@ -178,13 +253,16 @@ export default function VenueView(props: VenueViewProps) {
                             </CarouselItem>
                           ))
                         ) : (
-                          <CarouselItem className="font-semibold text-muted-foreground text-center">
-                            No photos available.
+                          <CarouselItem className="text-center font-semibold text-muted-foreground">
+                            <div className="flex h-[315px] flex-col items-center justify-center gap-4">
+                              <ImageIcon className="h-12 w-12" />
+                              No photos available
+                            </div>
                           </CarouselItem>
                         )}
                       </CarouselContent>
-                      {venue.photos.length > 0 ?(<CarouselPrevious />) : null}
-                      {venue.photos.length > 0 ?(<CarouselNext />) : null}
+                      {venue.photos.length > 0 ? <CarouselPrevious /> : null}
+                      {venue.photos.length > 0 ? <CarouselNext /> : null}
                     </Carousel>
                     <div className="grid grid-cols-1 gap-1 sm:grid-cols-2"></div>
                   </div>
@@ -195,7 +273,7 @@ export default function VenueView(props: VenueViewProps) {
                       <div className="grid grid-cols-2 gap-2">
                         {venue.tel ? (
                           <p className="leading-tight">
-                            <span>Phone</span>
+                            <span className="text-muted-foreground">Phone</span>
                             <span className="block text-sm font-medium">
                               {venue.tel}
                             </span>
@@ -203,7 +281,7 @@ export default function VenueView(props: VenueViewProps) {
                         ) : null}
                         {venue.email ? (
                           <p className="leading-tight">
-                            Email
+                            <span className="text-muted-foreground">Email</span>
                             <span className="block text-sm font-medium">
                               {venue.email}
                             </span>
@@ -211,7 +289,9 @@ export default function VenueView(props: VenueViewProps) {
                         ) : null}
                         {venue.website ? (
                           <p className="leading-tight">
-                            Website
+                            <span className="text-muted-foreground">
+                              Website
+                            </span>
                             <Link
                               href={venue.website}
                               target="_blank"
@@ -233,7 +313,44 @@ export default function VenueView(props: VenueViewProps) {
                   </div>
                 </CardContent>
                 <CardFooter className="mt-auto h-14 border-t py-2">
-                  <Button className="ml-auto text-white">Select Venue</Button>
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button variant="default" className="ml-auto text-white">
+                        {bookedVenue ? "Change Venue" : "Book Venue"}
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Confirm Booking Venue
+                        </AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Are you sure you want to book this venue?
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() =>
+                            handleVenueBook({
+                              address: venue.location.formatted_address ?? "",
+                              name: venue.name,
+                              photos:
+                                venue.photos.length > 0
+                                  ? venue.photos.map(
+                                      (p) =>
+                                        `${p.prefix}${p.width}x${p.height}${p.suffix}`,
+                                    )
+                                  : [],
+                            })
+                          }
+                          className="text-white"
+                        >
+                          Continue
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </CardFooter>
               </Card>
             ))

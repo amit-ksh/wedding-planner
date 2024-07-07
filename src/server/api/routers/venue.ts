@@ -18,6 +18,8 @@ import { TRPCError } from "@trpc/server";
 // - 8.0 <> 9.0 = Green (#73CF42)
 // - 9.0 + = DarkGreen (#00B551)
 
+const LIMIT = 50;
+
 export const venueRouter = createTRPCRouter({
   getVenues: protectedProcedure
     .input(
@@ -25,15 +27,21 @@ export const venueRouter = createTRPCRouter({
     )
     .query(async ({ input }) => {
       const options = {
-        method: 'GET',
+        method: "GET",
         headers: {
-          accept: 'application/json',
-          Authorization: 'fsq33Ta5BEEhsBu5GQbP1dXLxPkfwknZ5TTs7ILK838QA+Y='
-        }
+          accept: "application/json",
+          Authorization: "fsq33Ta5BEEhsBu5GQbP1dXLxPkfwknZ5TTs7ILK838QA+Y=",
+        },
       };
-      const query = `query=wedding hall or banquet&fields=fsq_id,name,geocodes,location,description,verified,price,photos,rating,website,tel,email,features`
-      const resp = await fetch(`https://api.foursquare.com/v3/places/search?${query}`, options)
-      const venues = await resp.json() as Array<{
+      const query = `query=${input.query}&limit=${LIMIT}&fields=fsq_id,name,geocodes,location,description,verified,price,photos,rating,website,tel,email,features`;
+      const resp = await fetch(
+        `https://api.foursquare.com/v3/places/search?${query}`,
+        options,
+      );
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
+      const venues = (await resp.json())?.results;
+
+      return venues as Array<{
         fsq_id: string;
         name: string;
         description?: string;
@@ -42,19 +50,20 @@ export const venueRouter = createTRPCRouter({
         tel?: string;
         email?: string;
         website?: string;
-        verified: boolean; 
+        verified: boolean;
         photos: Array<{
-        id: string;
-        prefix: string;
-        suffix: string;
-        width: number;
-        height: number;
-        createdAt: string;
+          id: string;
+          prefix: string;
+          suffix: string;
+          width: number;
+          height: number;
+          createdAt: string;
         }>;
         geocodes: {
           main: {
-            latitude: number; longitude: number; 
-          }
+            latitude: number;
+            longitude: number;
+          };
         };
         location: {
           address?: string;
@@ -65,9 +74,7 @@ export const venueRouter = createTRPCRouter({
           postcode?: string;
           region?: string;
         };
-      }>
-
-      return venues
+      }>;
     }),
   getWeddingVenue: protectedProcedure
     .input(z.object({ weddingId: z.string() }))
@@ -106,15 +113,24 @@ export const venueRouter = createTRPCRouter({
   book: protectedProcedure
     .input(
       z.object({
-        weddingId: z.string(),
         name: z.string(),
         address: z.string(),
         photos: z.array(z.string()),
+        weddingId: z.string(),
       }),
     )
     .mutation(async ({ input }) => {
       return await db.venue.create({
-        data: input,
+        data: {
+          name: input.name,
+          address: input.address,
+          photos: input.photos,
+          Wedding: {
+            connect: {
+              id: input.weddingId,
+            },
+          },
+        },
       });
     }),
   remove: protectedProcedure
