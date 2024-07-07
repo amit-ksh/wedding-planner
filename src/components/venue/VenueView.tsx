@@ -77,12 +77,6 @@ interface VenueViewProps {
   weddingId: string;
 }
 
-// TOOD: add city, state, country to the search form
-// TODO: add a loading state for the venues
-// TODO: paginate the venues
-// TODO: add a way to book the venue
-// TODO: add a way to view the booked venue
-
 export default function VenueView(props: VenueViewProps) {
   const [query, setQuery] = useState<string>("wedding hall or banquet");
   const { mutateAsync: bookVenue, status } = api.venue.book.useMutation({
@@ -103,11 +97,14 @@ export default function VenueView(props: VenueViewProps) {
     data: venues,
     isLoading: venuesLoading,
     isError: getVenuesError,
-  } = api.venue.getVenues.useQuery({
-    query,
-    country: "India",
-    state: "JH",
-  });
+  } = api.venue.getVenues.useQuery(
+    {
+      query,
+      country: "India",
+      state: "JH",
+    },
+    { enabled: !!query },
+  );
 
   const {
     data: bookedVenue,

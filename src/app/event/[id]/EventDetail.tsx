@@ -39,7 +39,6 @@ export default function EventDetails({ event }: EventProps) {
       toast({
         title: "Event updated!",
       });
-      router.push(`/wedding/${event.weddingId}`);
     },
     onError: () => {
       toast({
@@ -53,6 +52,7 @@ export default function EventDetails({ event }: EventProps) {
       toast({
         title: "Event delete!",
       });
+      router.push(`/wedding/${event.weddingId}`);
     },
     onError: () => {
       toast({

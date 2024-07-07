@@ -10,16 +10,20 @@ import Link from "next/link";
 import { buttonVariants } from "../ui/button";
 
 interface EventsViewProps {
-  events: Event[];
   weddingId: string;
 }
 
 export default function EventsView(props: EventsViewProps) {
+  const { data: events, refetch: refetchEvent } = api.event.getAll.useQuery(
+    { weddingId: props.weddingId },
+    { enabled: !!props.weddingId },
+  );
   const { mutate: createEvent, status } = api.event.create.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
       toast({
         title: "New event created!",
       });
+      await refetchEvent();
     },
     onError: () => {
       toast({
@@ -64,8 +68,8 @@ export default function EventsView(props: EventsViewProps) {
         </CardHeader>
       </Card>
       <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-2">
-        {props?.events?.length > 0
-          ? props?.events.map((event) => (
+        {events && events?.length > 0
+          ? events.map((event) => (
               <Card key={event.id}>
                 <CardHeader className="flex flex-row items-center justify-between">
                   <div className="">
@@ -89,7 +93,7 @@ export default function EventsView(props: EventsViewProps) {
             ))
           : null}
       </div>
-      {props?.events?.length <= 0 ? (
+      {events && events?.length <= 0 ? (
         <div className="flex h-[50vh] items-center justify-center">
           <h2 className="text-2xl">No events are created yet!</h2>
         </div>

@@ -1,6 +1,5 @@
 "use client";
 
-import type { Wedding } from "@prisma/client";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -11,15 +10,19 @@ import WeddingForm, {
 import { api } from "~/trpc/react";
 
 interface WeddingViewProps {
-  wedding: Wedding;
+  weddingId: string;
 }
 
-export default function WeddingView({ wedding }: WeddingViewProps) {
+export default function WeddingView({ weddingId }: WeddingViewProps) {
+  const { data: wedding, refetch: refetchWedding } = api.wedding.get.useQuery({
+    id: weddingId,
+  });
   const { mutate: updateWedding, status } = api.wedding.update.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
       toast({
         title: "Wedding details updated successfully!",
       });
+      await refetchWedding();
     },
     onError: () => {
       toast({
@@ -36,7 +39,7 @@ export default function WeddingView({ wedding }: WeddingViewProps) {
     data.date.setMinutes(Number(minutes));
 
     const payload: Parameters<typeof updateWedding>["0"] = {
-      id: wedding.id,
+      id: weddingId,
       title: data.title,
       description: data.description,
       brideName: data.brideName,
@@ -45,17 +48,27 @@ export default function WeddingView({ wedding }: WeddingViewProps) {
     };
     updateWedding(payload);
   }
+
+  if (!wedding) {
+    return (
+      <div className="flex h-[40vh] items-center justify-center gap-4">
+        <Loader className="h-6 w-6 animate-spin" />
+        <p>Loading wedding data...</p>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-5">
       <WeddingForm
         onSubmit={handleFormSubmit}
-        defaultValues={{ ...wedding, time: format(wedding.date, "kk:mm") }}
+        defaultValues={{ ...wedding, time: format(wedding?.date, "kk:mm") }}
         disabled={status == "pending"}
         formTitle="Wedding"
         formDescription="Manage the wedding details from here."
         submitButtonLabel="Save changes"
       />
-      <DeleteWeddingForm id={wedding.id} title={wedding.title} />
+      <DeleteWeddingForm id={weddingId} title={wedding?.title} />
     </div>
   );
 }

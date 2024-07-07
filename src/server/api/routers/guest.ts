@@ -189,6 +189,8 @@ export const guestRouter = createTRPCRouter({
           message: "Guest not found!",
         });
 
-      return guest;
+      return await db.guest.delete({
+        where: input,
+      });
     }),
 });
