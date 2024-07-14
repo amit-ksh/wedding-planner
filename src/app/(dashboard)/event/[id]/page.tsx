@@ -3,8 +3,6 @@ import { redirect } from "next/navigation";
 import { db } from "~/server/db";
 import MaxWidthWrapper from "~/components/MaxWidthWrapper";
 import EventDetail from "./EventDetail";
-import EventMedia from "./EventMedia";
-import { Separator } from "~/components/ui/separator";
 
 interface PageProps {
   params: {
@@ -31,17 +29,13 @@ export default async function page(props: PageProps) {
         userId: user.id,
       },
     },
-    include: {
-      Media: true,
-    },
+    select: { id: true },
   });
   if (!event) return redirect(`/dashboard`);
 
   return (
     <MaxWidthWrapper className="my-4">
-      <EventDetail event={event} />
-      <Separator className="my-4" />
-      <EventMedia eventId={event.id} media={event.Media} />
+      <EventDetail eventId={event.id} />
     </MaxWidthWrapper>
   );
 }

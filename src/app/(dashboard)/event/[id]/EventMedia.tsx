@@ -28,11 +28,15 @@ interface EventMediaProps {
 }
 
 export default function EventMedia({ media, eventId }: EventMediaProps) {
+  const { refetch: refetchEvent } = api.event.get.useQuery({
+    id: eventId,
+  });
   const { mutate: deleteMedia } = api.media.delete.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
       toast({
         title: "Media deleted!",
       });
+      await refetchEvent();
     },
     onError: (error) => {
       toast({

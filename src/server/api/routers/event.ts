@@ -19,7 +19,7 @@ export const eventRouter = createTRPCRouter({
           },
         },
         orderBy: {
-          date: "desc",
+          date: "asc",
         },
       });
     }),

@@ -5,6 +5,7 @@ import { format } from "date-fns";
 import { buttonVariants } from "~/components/ui/button";
 import { api } from "~/trpc/server";
 import MaxWidthWrapper from "~/components/MaxWidthWrapper";
+import Image from "next/image";
 
 async function Dashboard() {
   const weddings = await api.wedding.getAll();
@@ -12,6 +13,17 @@ async function Dashboard() {
   return (
     <main>
       <MaxWidthWrapper className="mx-auto max-w-7xl px-3">
+        <div>
+          <Image
+            src="/groom-bride.svg"
+            alt="groom bride wedding photo"
+            width={500}
+            height={500}
+            className="fixed -bottom-16 -right-8 z-50 opacity-20"
+            aria-hidden
+          />
+        </div>
+
         <div className="mt-8 flex flex-col items-start justify-between gap-4 border-b border-gray-200 pb-2 sm:flex-row sm:items-center sm:gap-0">
           <h1 className="text-3xl">Dashboard</h1>
           <Link

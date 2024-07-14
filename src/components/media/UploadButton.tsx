@@ -14,11 +14,13 @@ interface UploadButton {
 }
 
 export default function UploadButton({ eventId }: UploadButton) {
+  const { refetch: refetchEvent } = api.event.get.useQuery({ id: eventId });
   const { mutate: createMedia, isPending } = api.media.create.useMutation({
-    onSuccess: () => {
+    onSuccess: async () => {
       toast({
         title: "Media uploaded!",
       });
+      await refetchEvent();
     },
     onError: (error) => {
       toast({

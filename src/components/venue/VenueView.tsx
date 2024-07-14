@@ -159,35 +159,39 @@ export default function VenueView(props: VenueViewProps) {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <h4 className="mb-2 text-lg font-medium">Photos</h4>
-          <Carousel className="mx-auto w-[90%]">
-            <CarouselContent>
-              {bookedVenue && bookedVenue.photos.length > 0 ? (
-                <>
-                  {bookedVenue?.photos.map((photo) => (
-                    <CarouselItem key={photo} className="lg:basis-1/2">
-                      <Image
-                        src={`${photo}`}
-                        width={512}
-                        height={408}
-                        alt={bookedVenue.name}
-                        className="aspect-auto rounded-md object-cover"
-                      />
+          {bookedVenue && (
+            <>
+              <h4 className="mb-2 text-lg font-medium">Photos</h4>
+              <Carousel className="mx-auto w-[90%]">
+                <CarouselContent>
+                  {bookedVenue && bookedVenue.photos.length > 0 ? (
+                    <>
+                      {bookedVenue?.photos.map((photo) => (
+                        <CarouselItem key={photo} className="lg:basis-1/2">
+                          <Image
+                            src={`${photo}`}
+                            width={512}
+                            height={408}
+                            alt={bookedVenue.name}
+                            className="aspect-video rounded-md object-cover"
+                          />
+                        </CarouselItem>
+                      ))}
+                      <CarouselPrevious />
+                      <CarouselNext />
+                    </>
+                  ) : (
+                    <CarouselItem className="text-center font-semibold text-muted-foreground">
+                      <div className="flex h-[315px] flex-col items-center justify-center gap-4">
+                        <ImageIcon className="h-12 w-12" />
+                        No photos available
+                      </div>
                     </CarouselItem>
-                  ))}
-                  <CarouselPrevious />
-                  <CarouselNext />
-                </>
-              ) : (
-                <CarouselItem className="text-center font-semibold text-muted-foreground">
-                  <div className="flex h-[315px] flex-col items-center justify-center gap-4">
-                    <ImageIcon className="h-12 w-12" />
-                    No photos available
-                  </div>
-                </CarouselItem>
-              )}
-            </CarouselContent>
-          </Carousel>
+                  )}
+                </CarouselContent>
+              </Carousel>
+            </>
+          )}
         </CardContent>
       </Card>
 
@@ -245,7 +249,7 @@ export default function VenueView(props: VenueViewProps) {
                                 width={photo.width}
                                 height={photo.height}
                                 alt={venue.name}
-                                className="aspect-auto w-full rounded-md object-cover"
+                                className="aspect-video w-full rounded-md object-cover"
                               />
                             </CarouselItem>
                           ))
