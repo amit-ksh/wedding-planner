@@ -33,7 +33,7 @@ export const venueRouter = createTRPCRouter({
           Authorization: "fsq33Ta5BEEhsBu5GQbP1dXLxPkfwknZ5TTs7ILK838QA+Y=",
         },
       };
-      const query = `query=${input.query}&limit=${LIMIT}&fields=fsq_id,name,geocodes,location,description,verified,price,photos,rating,website,tel,email,features`;
+      const query = `query=wedding hall or banquet ${input.query}&limit=${LIMIT}&fields=fsq_id,name,geocodes,location,description,verified,price,photos,rating,website,tel,email,features`;
       const resp = await fetch(
         `https://api.foursquare.com/v3/places/search?${query}`,
         options,

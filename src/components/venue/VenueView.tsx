@@ -78,7 +78,7 @@ interface VenueViewProps {
 }
 
 export default function VenueView(props: VenueViewProps) {
-  const [query, setQuery] = useState<string>("wedding hall or banquet");
+  const [query, setQuery] = useState<string>("ranchi, jharkhand, india");
   const { mutateAsync: bookVenue, status } = api.venue.book.useMutation({
     onSuccess(data) {
       toast({
@@ -166,8 +166,11 @@ export default function VenueView(props: VenueViewProps) {
                 <CarouselContent>
                   {bookedVenue && bookedVenue.photos.length > 0 ? (
                     <>
-                      {bookedVenue?.photos.map((photo) => (
-                        <CarouselItem key={photo} className="lg:basis-1/2">
+                      {bookedVenue?.photos.map((photo, idx) => (
+                        <CarouselItem
+                          key={photo + idx}
+                          className="lg:basis-1/2"
+                        >
                           <Image
                             src={`${photo}`}
                             width={512}
