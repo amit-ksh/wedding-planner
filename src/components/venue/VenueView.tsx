@@ -198,7 +198,7 @@ export default function VenueView(props: VenueViewProps) {
         </CardContent>
       </Card>
 
-      <div className="rounded-xl border bg-slate-900/40 p-2">
+      <div className="rounded-xl border border-purple-500 bg-purple-900/60 p-2">
         <form
           id="search-venue-form"
           className="flex flex-col gap-2 sm:flex-row"
@@ -232,7 +232,7 @@ export default function VenueView(props: VenueViewProps) {
                       href={`https://www.google.com/maps/search/?api=1&query=${venue.geocodes.main.latitude},${venue.geocodes.main.longitude}`}
                       target="_blank"
                       rel="noreferrer"
-                      className="min-w-28 rounded-md border-2 p-2 text-center font-semibold text-blue-500 hover:underline focus:underline"
+                      className="min-w-28 rounded-md border-2 border-purple-400 bg-purple-600 p-2 text-center font-semibold text-white hover:underline focus:underline"
                     >
                       Google map
                     </Link>

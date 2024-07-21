@@ -31,6 +31,8 @@ async function Dashboard() {
             className={buttonVariants({
               variant: "outline",
               size: "lg",
+              className:
+                "border-purple-400 bg-purple-800 text-white hover:bg-purple-700",
             })}
           >
             Create Wedding
@@ -48,7 +50,7 @@ async function Dashboard() {
               .map((wedding) => (
                 <li
                   key={wedding.id}
-                  className="col-span-1 rounded-md border text-card-foreground shadow transition hover:shadow-lg"
+                  className="col-span-1 rounded-md border border-purple-400 bg-purple-800 text-card-foreground shadow transition hover:shadow-lg"
                 >
                   <div className="flex  justify-between">
                     <Link
@@ -74,10 +76,11 @@ async function Dashboard() {
                       className={buttonVariants({
                         variant: "outline",
                         size: "icon",
-                        className: "border-0 hover:bg-transparent",
+                        className:
+                          "border-0 bg-transparent hover:bg-transparent",
                       })}
                     >
-                      <Trash2Icon className="h-4 w-4 text-red-800 hover:text-red-400" />
+                      <Trash2Icon className="h-4 w-4 text-red-600 hover:text-red-500" />
                     </Link>
                   </div>
 

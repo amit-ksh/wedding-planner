@@ -86,7 +86,7 @@ export function AddGuestForm({
           {children}
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[500px]">
+      <DialogContent className="bg-purple-800/70 sm:max-w-[500px]">
         <DialogHeader>
           <DialogTitle>{formTitle}</DialogTitle>
           {!!formDescription && (
@@ -128,7 +128,7 @@ export function AddGuestForm({
                   <Button
                     variant="outline"
                     size="icon"
-                    className="col-span-1 text-red-800"
+                    className="col-span-1 font-semibold text-red-600"
                     onClick={() => remove(index)}
                   >
                     <MinusCircleIcon className="h-4 w-4" />{" "}
@@ -137,9 +137,9 @@ export function AddGuestForm({
               ))}
 
               <Button
-                variant="secondary"
+                variant="ghost"
                 size="sm"
-                className="flex gap-2"
+                className="flex gap-2 hover:bg-purple-500"
                 onClick={() => append({ name: "", email: "" })}
               >
                 Add new guest <PlusCircleIcon />

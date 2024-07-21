@@ -66,29 +66,29 @@ export default function EventMedia({ media, eventId }: EventMediaProps) {
       <div className="mt-4 grid gap-2 sm:grid-cols-2 xl:grid-cols-3">
         {media.length > 0 &&
           media.map((m) => (
-            <div key={m.id} className="relative rounded-md bg-blue-500/20 p-1">
+            <div key={m.id} className="relative rounded-md bg-blue-500/20 p-2">
               {m.type == "image" ? (
                 <CldImage
                   id={m.id}
-                  width="400"
-                  height="300"
+                  width={1200}
+                  height={720}
                   src={m.publicId}
                   alt={m.type as string}
                   flags={"attachment"}
-                  className="!h-full !w-full"
+                  className="!h-full !w-full overflow-hidden rounded-sm"
                 />
               ) : (
                 <CldVideoPlayer
                   id={m.id}
                   src={m.publicId}
-                  width="400"
-                  height="300"
+                  width={1200}
+                  height={720}
                   bigPlayButton={true}
-                  className="!h-full !w-full"
+                  className="!h-full !w-full overflow-hidden rounded-sm"
                 />
               )}
 
-              <div className="absolute right-2 top-2 z-10">
+              <div className="absolute right-3 top-3 z-10">
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
                     <Button

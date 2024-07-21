@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import { redirect } from "next/navigation";
 import {
   getKindeServerSession,
   LoginLink,

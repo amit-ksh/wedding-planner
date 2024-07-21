@@ -120,7 +120,9 @@ export default function EventDetails({ eventId }: EventProps) {
 
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button variant="destructive">Delete Event</Button>
+                <Button variant="destructive" className="hover:bg-red-600">
+                  Delete Event
+                </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>

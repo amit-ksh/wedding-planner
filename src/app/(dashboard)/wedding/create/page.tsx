@@ -44,7 +44,7 @@ export default function CreateWedding() {
   }
 
   return (
-    <MaxWidthWrapper>
+    <MaxWidthWrapper className="my-8">
       <WeddingForm
         onSubmit={handleFormSubmit}
         defaultValues={{ time: "12:00" }}

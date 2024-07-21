@@ -113,9 +113,11 @@ export function DeleteWeddingForm({
   });
 
   return (
-    <Card id="delete">
+    <Card id="delete" className="border !bg-purple-700/50">
       <CardHeader>
-        <CardTitle className="text-destructive">Delete Wedding</CardTitle>
+        <CardTitle className="font-sans font-medium text-destructive">
+          Delete Wedding
+        </CardTitle>
         <CardDescription>
           Be cautious, once deleted, it cannot be restored.
         </CardDescription>

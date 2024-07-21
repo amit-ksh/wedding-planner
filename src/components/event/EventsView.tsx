@@ -99,7 +99,10 @@ export default function EventsView(props: EventsViewProps) {
                     <div className="flex flex-row items-center justify-between border-t">
                       <Link
                         href={`/event/${event.id}`}
-                        className={buttonVariants({ variant: "link" })}
+                        className={buttonVariants({
+                          variant: "link",
+                          className: "text-white underline",
+                        })}
                       >
                         View details & media
                       </Link>
