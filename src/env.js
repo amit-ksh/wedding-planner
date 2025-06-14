@@ -20,6 +20,7 @@ export const env = createEnv({
     CLOUDINARY_API_KEY: z.string(),
     CLOUDINARY_API_SECRET: z.string(),
     RESEND_API_KEY: z.string(),
+    FOURSQUARE_API_KEY: z.string()
   },
 
   /**
@@ -47,6 +48,7 @@ export const env = createEnv({
     CLOUDINARY_API_KEY: process.env.CLOUDINARY_API_KEY,
     CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
     RESEND_API_KEY: process.env.RESEND_API_KEY,
+    FOURSQUARE_API_KEY: process.env.FOURSQUARE_API_KEY,
 
     // client env
     NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME:

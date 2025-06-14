@@ -2,6 +2,7 @@ import { db } from "~/server/db";
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
+import { env } from "~/env";
 
 // Values include:
 // - 1 = Cheap
@@ -30,7 +31,7 @@ export const venueRouter = createTRPCRouter({
         method: "GET",
         headers: {
           accept: "application/json",
-          Authorization: "fsq33Ta5BEEhsBu5GQbP1dXLxPkfwknZ5TTs7ILK838QA+Y=",
+          Authorization: env.FOURSQUARE_API_KEY,
         },
       };
       const query = `query=wedding hall or banquet ${input.query}&limit=${LIMIT}&fields=fsq_id,name,geocodes,location,description,verified,price,photos,rating,website,tel,email,features`;
